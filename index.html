@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Neritic — ask the ocean, reach the shore</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --deep:#0e2b44;
+    --mid:#17496b;
+    --shallow:#2f7694;
+    --sand:#cdbfa0;
+    --sand-lo:#9c8f72;
+    --teal:#4a9bb0;
+    --teal-lo:#2d6f82;
+    --ink:#eaf3f6;
+    --mut:#bcd2da;
+    --faint:#8fb0bb;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    min-height:100vh;display:flex;flex-direction:column;position:relative;overflow-x:hidden;
+    color:var(--ink);
+    font:16px/1.6 "Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    background:#0a2238;
+  }
+
+  /* hero image sits in normal flow at the top; content follows BELOW it.
+     fades into the background on the bottom AND the left/right edges
+     (two mask layers intersected) */
+  .hero-img{
+    display:block;width:100%;max-width:1024px;height:auto;margin:0 auto;
+    --fade-bottom:linear-gradient(180deg,#000 0%,#000 70%,transparent 100%);
+    --fade-sides:linear-gradient(90deg,transparent 0%,#000 12%,#000 88%,transparent 100%);
+    -webkit-mask-image:var(--fade-bottom),var(--fade-sides);
+            mask-image:var(--fade-bottom),var(--fade-sides);
+    -webkit-mask-composite:source-in;        /* Safari: intersect the two masks */
+            mask-composite:intersect;         /* standard: intersect */
+    opacity:.97;
+  }
+
+  .top{position:absolute;top:0;right:0;z-index:3;padding:20px 28px}
+  .top .by{color:var(--faint);font-size:12px;border:1px solid rgba(143,176,187,.4);
+    padding:4px 11px;border-radius:999px;background:rgba(10,34,56,.4);backdrop-filter:blur(4px)}
+
+  main{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+    text-align:center;padding:12px 24px 48px}
+  .inner{max-width:640px}
+
+  .coming{display:inline-block;color:#cfe8ee;letter-spacing:.04em;text-transform:uppercase;
+    font-size:clamp(20px,4.5vw,34px);font-weight:600;padding:18px 40px;border-radius:999px;
+    border:1px solid rgba(190,225,230,.3);background:rgba(10,34,56,.45);backdrop-filter:blur(4px);
+    text-shadow:0 2px 16px rgba(0,0,0,.45);line-height:1.25}
+  .coming .lead{display:block;font-size:.5em;font-weight:500;opacity:.85;letter-spacing:.08em}
+
+  footer{padding:18px 28px;color:var(--sand-lo);font-size:12.5px;text-align:center}
+</style>
+</head>
+<body>
+
+  <div class="top"><span class="by">by GlobalStorm</span></div>
+
+  <!-- real brand image (underwater emblem + NERITIC + tagline) -->
+  <img class="hero-img" src="neritic-image.webp" alt="Neritic — ask the ocean, reach the shore" />
+
+  <main>
+    <div class="inner">
+      <p class="coming"><span class="lead">Early access</span>coming soon</p>
+    </div>
+  </main>
+
+  <footer>
+    <span>© GlobalStorm · Neritic</span>
+  </footer>
+
+</body>
+</html>
