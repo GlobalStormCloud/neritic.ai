@@ -1,0 +1,12 @@
+---
+interface Props {
+  /** the raw Lucide .svg file text */
+  raw: string;
+}
+// Lucide (ISC): keep the shapes, restyle the <svg> wrapper (20px, currentColor, stroke 2). Decorative.
+const shapes = Astro.props.raw.match(/<(path|circle)[^>]*\/>/g)?.join('') ?? '';
+---
+<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false" set:html={shapes} />
+<style>
+  .ico { flex: none; width: 20px; height: 20px; fill: none; stroke: var(--mist-lt); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+</style>

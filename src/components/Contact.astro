@@ -1,22 +1,34 @@
 ---
 import Button from './Button.astro';
-import SectionLabel from './SectionLabel.astro';
+import { contactBg } from '../data/signals';
 import { DEMO_URL, site } from '../data/site';
 const c = site.contact;
 ---
-<section class="sec" id="contact">
-  <div class="wrap sec__in">
-    <SectionLabel>{c.label}</SectionLabel>
-    <div>
-      <a class="mail t-email" href={`mailto:${c.email}`}>{c.email}</a>
-      <div class="act"><Button href={DEMO_URL}>{c.demo}</Button></div>
+<section class="sec cta" id="contact">
+  <div class="bg" aria-hidden="true">
+    <svg viewBox="0 0 1000 200" preserveAspectRatio="none">
+      {contactBg.map((d) => <path class="trace" d={d} />)}
+    </svg>
+  </div>
+  <div class="wrap">
+    <p class="t-legend reveal">{c.label}</p>
+    <h2 class="t-h2 t-h2--xl reveal">{c.heading}</h2>
+    <div class="row reveal">
+      <Button href={DEMO_URL} size="lg">{c.demo}</Button>
+      <div>
+        <span class="hello t-mono">{c.hello}</span>
+        <a class="mail t-email" href={`mailto:${c.email}`}>{c.email}</a>
+      </div>
     </div>
   </div>
 </section>
 <style>
-  .sec { padding-block: var(--sec-pad); border-top: 1px solid var(--rule); }
-  .sec__in { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 28px clamp(32px, 5vw, 72px); align-items: start; }
-  .mail { text-decoration: none; border-bottom: 1px solid var(--amber); overflow-wrap: anywhere; }
-  .act { margin-top: 26px; }
-  @media (max-width: 900px) { .sec__in { grid-template-columns: minmax(0, 1fr); } }
+  .cta { overflow: hidden; isolation: isolate; background: var(--graphite); }
+  .bg { position: absolute; left: 0; right: 0; bottom: 0; height: 60%; z-index: -1; opacity: 0.35; -webkit-mask-image: linear-gradient(transparent, #000); mask-image: linear-gradient(transparent, #000); }
+  .bg svg { width: 100%; height: 100%; }
+  .t-legend { margin-bottom: 22px; }
+  h2 { max-width: 15em; }
+  .row { display: flex; flex-wrap: wrap; align-items: center; gap: 22px 40px; margin-top: clamp(28px, 3vw, 44px); }
+  .hello { color: var(--mist-lt); }
+  .mail { display: block; margin-top: 6px; text-decoration: none; border-bottom: 1px solid var(--amber); overflow-wrap: anywhere; }
 </style>

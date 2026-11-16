@@ -1,28 +1,94 @@
 ---
-import SectionLabel from './SectionLabel.astro';
+import Plate from './Plate.astro';
+import { stepCalm, stepTailCalm, stepTailDrift } from '../data/signals';
 import { site } from '../data/site';
 const s = site.starts;
+const lanes = [50, 150, 250, 350];
+const MARK = 640; // x of the marked point; the lamp sits on lane 3
 ---
-<section class="sec">
+<section class="sec" id="start">
   <div class="wrap">
-    <SectionLabel>{s.label}</SectionLabel>
-    <ul class="starts" role="list">
-      {s.items.map((it, i) => (
-        <li><span class="t-mono">{i + 1}</span><h3 class="t-step-label">{it.label}</h3><p class="t-step">{it.text}</p></li>
-      ))}
-    </ul>
+    <div class="sec__head reveal"><span class="t-mono">03</span><h2 class="t-h2">{s.label}</h2></div>
+    <!-- data-step is set by the page script; without it the first step shows and all text is readable -->
+    <div class="tl" data-step="1">
+      <div class="tl__fig">
+        <Plate>
+          <svg class="ill" viewBox="0 0 1000 400" role="img" aria-label={site.illustration.stepAlt} preserveAspectRatio="xMidYMid meet">
+            <rect class="win" x="20" y="14" width="400" height="372" rx="3" />
+            <path class="win-edge" d="M20 14 V386 M420 14 V386" />
+            {lanes.map((y) => <line class="lane" x1="20" x2="980" y1={y} y2={y} />)}
+            {stepCalm.map((d) => <path class="trace" d={d} />)}
+            <path class="trace tail tail--calm" d={stepTailCalm} />
+            <path class="trace tail tail--drift" d={stepTailDrift} />
+            <g class="alert">
+              <line class="mark" x1={MARK} x2={MARK} y1="14" y2="386" />
+              <ellipse class="halo" cx={MARK} cy="250" rx="13" ry="9.6" />
+              <ellipse class="lamp" cx={MARK} cy="250" rx="7.5" ry="5.5" />
+            </g>
+          </svg>
+          <div slot="overlay" class="chips" aria-hidden="true">
+            <span class="chip chip--what">{s.tags.what}</span>
+            <span class="chip chip--which">{s.tags.which}</span>
+            <span class="chip chip--since">{s.tags.since}</span>
+          </div>
+        </Plate>
+      </div>
+      <ol class="steps">
+        {s.items.map((it, i) => (
+          <li class:list={['step', i === 0 && 'is-on']}>
+            <button type="button" class="step__btn" aria-pressed={i === 0 ? 'true' : 'false'}>
+              <span class="t-mono">{i + 1}</span>
+              <span class="lbl t-legend">{it.label}</span>
+              <span class="txt t-step">{it.text}</span>
+            </button>
+          </li>
+        ))}
+      </ol>
+    </div>
   </div>
 </section>
 <style>
-  .sec { padding-block: var(--sec-pad); border-top: 1px solid var(--rule); }
-  .starts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--rule); margin-top: 36px; }
-  .starts li { padding: 26px 28px 8px 0; margin-right: 28px; border-right: 1px solid var(--rule); }
-  .starts li:last-child { border-right: 0; margin-right: 0; }
-  h3 { margin: 18px 0 0; }
-  p { margin-top: 8px; }
-  @media (max-width: 900px) {
-    .starts { grid-template-columns: minmax(0, 1fr); }
-    .starts li { border-right: 0; margin-right: 0; border-bottom: 1px solid var(--rule); padding: 22px 0; }
-    .starts li:last-child { border-bottom: 0; }
+  .tl { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(28px, 5vw, 80px); align-items: start; }
+  .tl__fig { position: sticky; top: calc(var(--nav) + 20px); }
+  .chips { position: absolute; inset: 0; pointer-events: none; }
+  .chip { position: absolute; padding: 6px 9px; font: 400 var(--fs-small)/1 var(--f-mono); letter-spacing: 0.04em; white-space: nowrap; color: var(--paper); background: var(--ink); border: 1px solid var(--rule-2); border-left: 2px solid var(--amber); border-radius: var(--r-1); opacity: 0; }
+  .chip--what { left: 74%; top: 35%; }
+  .chip--which { left: 3%; top: 62.5%; transform: translateY(-50%); }
+  .chip--since { left: 65.5%; top: 80%; }
+  .steps { display: flex; flex-direction: column; }
+  .step { border-left: 2px solid var(--rule); }
+  .step.is-on { border-left-color: var(--amber); }
+  .step__btn { display: block; width: 100%; min-height: min(46vh, 340px); padding: clamp(22px, 4vh, 44px) 0 clamp(22px, 4vh, 44px) clamp(18px, 2vw, 32px); text-align: left; background: none; border: 0; color: var(--mist-lt); font: inherit; cursor: pointer; }
+  .step.is-on .step__btn { color: var(--paper); }
+  .step__btn .t-mono { display: block; color: var(--mist-lt); }
+  .lbl { display: block; margin-top: 14px; }
+  .step.is-on .lbl { color: var(--amber); }
+  .txt { display: block; max-width: 17em; margin-top: 12px; }
+  .win { fill: var(--graphite-2); opacity: 0; }
+  .win-edge { stroke: var(--rule-2); stroke-width: 1.2; fill: none; opacity: 0; }
+  .tl .trace { opacity: 0.45; }
+  .tl .tail--drift { opacity: 0; stroke: var(--amber); stroke-width: 2.4; }
+  .tl .alert { opacity: 0; }
+  /* step 2: a stretch of normal running is marked */
+  .tl[data-step='2'] .trace:not(.tail--drift) { opacity: 0.9; }
+  .tl[data-step='2'] .win, .tl[data-step='2'] .win-edge { opacity: 1; }
+  /* step 3: the change, the marked point and the three tags */
+  .tl[data-step='3'] .trace { opacity: 0.8; }
+  .tl[data-step='3'] .win { opacity: 0.45; }
+  .tl[data-step='3'] .win-edge { opacity: 0.6; }
+  .tl[data-step='3'] .tail--calm { opacity: 0; }
+  .tl[data-step='3'] .tail--drift { opacity: 1; }
+  .tl[data-step='3'] .alert, .tl[data-step='3'] .chip { opacity: 1; }
+  @media (prefers-reduced-motion: no-preference) {
+    .step { transition: border-color 0.3s; }
+    .step__btn { transition: color 0.3s; }
+    .trace, .win, .win-edge, .alert { transition: opacity 0.5s var(--ease); }
+    .chip { transition: opacity 0.5s 0.25s var(--ease); }
   }
+  @media (max-width: 900px) {
+    .tl { grid-template-columns: minmax(0, 1fr); }
+    .tl__fig { top: calc(var(--nav) + 8px); z-index: 5; padding-bottom: 10px; background: var(--ink); }
+    .step__btn { min-height: 0; padding-block: 22px; }
+  }
+  @media (max-width: 640px) { .chip { display: none; } }
 </style>

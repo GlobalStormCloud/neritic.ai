@@ -1,0 +1,52 @@
+---
+import Icon from './Icon.astro';
+import Placeholder from './Placeholder.astro';
+import cable from '../assets/icons/lucide/cable.svg?raw';
+import waveform from '../assets/icons/lucide/audio-waveform.svg?raw';
+import compass from '../assets/icons/lucide/compass.svg?raw';
+import { site } from '../data/site';
+
+interface Props {
+  /** draft build only: show the unapproved slot */
+  draft?: boolean;
+}
+const { draft = false } = Astro.props;
+const p = site.proof;
+const icons = { cable, 'audio-waveform': waveform, compass };
+---
+<section class="sec" id="proof">
+  <div class="wrap proof">
+    <div>
+      <div class="sec__head reveal"><span class="t-mono">02</span></div>
+      <h2 class="t-h2 proof__h reveal">{p.heading}</h2>
+      <p class="proof__sub t-sub reveal">{p.line}</p>
+      <ul class="inputs reveal" role="list">
+        {p.inputs.map((i) => <li class="t-mono"><Icon raw={icons[i.icon]} />{i.label}</li>)}
+      </ul>
+      {draft && <div class="proof__ph"><Placeholder note={site.placeholders.proof} /></div>}
+    </div>
+    <figure class="fig reveal">
+      <i></i><i></i><i></i><i></i>
+      <img src={p.photo.src} width={p.photo.width} height={p.photo.height} alt={p.photo.alt} loading="lazy" decoding="async" />
+      <figcaption class="t-mono">{p.caption}</figcaption>
+    </figure>
+  </div>
+</section>
+<style>
+  .proof { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(28px, 5vw, 88px); align-items: center; }
+  .proof__h { max-width: 11em; font-size: clamp(34px, 1.6rem + 3vw, 76px); line-height: 1.02; }
+  .proof__sub { max-width: 21em; margin-top: clamp(20px, 2.4vw, 32px); }
+  .inputs { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+  .inputs li { display: inline-flex; align-items: center; gap: 10px; padding: 10px 14px 10px 12px; border: 1px solid var(--rule-2); border-radius: var(--r-1); color: var(--paper); line-height: 1; letter-spacing: 0.02em; }
+  .proof__ph { margin-top: 36px; }
+  .proof .sec__head { margin-bottom: clamp(22px, 3vw, 40px); }
+  .fig { position: relative; margin: 0; padding: 10px 10px 0; background: var(--graphite); border: 1px solid var(--rule); border-radius: var(--r-2); }
+  .fig i { position: absolute; z-index: 2; width: 14px; height: 14px; border: 0 solid var(--rule-2); }
+  .fig i:nth-of-type(1) { left: -1px; top: -1px; border-width: 2px 0 0 2px; }
+  .fig i:nth-of-type(2) { right: -1px; top: -1px; border-width: 2px 2px 0 0; }
+  .fig i:nth-of-type(3) { left: -1px; bottom: -1px; border-width: 0 0 2px 2px; }
+  .fig i:nth-of-type(4) { right: -1px; bottom: -1px; border-width: 0 2px 2px 0; }
+  .fig img { display: block; width: 100%; height: auto; aspect-ratio: 900 / 1050; object-fit: cover; border-radius: var(--r-1); filter: saturate(0.88) brightness(0.9); }
+  .fig figcaption { padding: 14px 6px 16px; color: var(--mist-lt); }
+  @media (max-width: 900px) { .proof { grid-template-columns: minmax(0, 1fr); } }
+</style>

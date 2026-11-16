@@ -1,11 +1,11 @@
 # Neritic AI site
 
-One-page static site for Neritic AI, built with Astro (no client scripts).
+One-page static site for Neritic AI, built with Astro. One small inline script (scroll progress, current nav link, the "How it starts" step, fade-in); the page is complete and readable without it.
 
 - Text: `src/data/site.ts` (the product name is the `PRODUCT` constant, the demo button target is `DEMO_URL`).
 - Look: `src/styles/theme.css` (colour, type and size tokens, fonts, one class per type role).
-- Layout: `src/components/`, `src/layouts/`, `src/pages/`.
-- Fonts (SIL OFL) in `public/fonts/` with their licences; Lucide `arrow-right` (ISC) in `src/assets/icons/lucide/`, licence in `public/icons/`.
+- Layout: `src/components/`, `src/layouts/`, `src/pages/`. The signal drawings are illustrations, not data: `src/data/signals.ts`.
+- Fonts (SIL OFL) in `public/fonts/` with their licences; Lucide icons (ISC) in `src/assets/icons/lucide/`, licence in `public/icons/`.
 
 ## Build locally
 
@@ -14,6 +14,9 @@ npm ci
 npm run build   # writes dist/
 npm run check   # astro check
 ```
+
+Two slots whose wording is not approved are drawn only by a draft build, as marked placeholders:
+`NERITIC_DRAFT=1 npx astro build --outDir dist-draft`. The normal build never contains them.
 
 `dist/` is the output; it is not committed.
 

@@ -22,6 +22,7 @@ const image = new URL(site.share.image, site.url).href;
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0d0f12" />
     {noindex && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={canonical} />
     <meta property="og:type" content="website" />
@@ -47,19 +48,65 @@ const image = new URL(site.share.image, site.url).href;
       <slot />
     </main>
     <Footer />
+    <!-- One small inline script (no library, no request): scroll progress, the current section in the nav, the
+         "How it starts" step and the fade-in. The page is complete and readable without it. -->
+    <script is:inline>
+      (function () {
+        var d = document, h = d.documentElement;
+        h.classList.add('js');
+        var nav = d.querySelector('.nav'), bar = d.querySelector('.progress');
+        var tl = d.querySelector('.tl'), steps = [].slice.call(d.querySelectorAll('.step'));
+        var links = [].slice.call(d.querySelectorAll('.nav__links a'));
+        var secs = links.map(function (a) { return d.querySelector(a.hash); });
+        function setStep(n) {
+          tl.setAttribute('data-step', n);
+          steps.forEach(function (s, i) {
+            var on = i + 1 === n;
+            s.classList.toggle('is-on', on);
+            s.querySelector('button').setAttribute('aria-pressed', on ? 'true' : 'false');
+          });
+        }
+        var tick = false;
+        function frame() {
+          tick = false;
+          var y = scrollY, m = h.scrollHeight - innerHeight;
+          bar.style.transform = 'scaleX(' + (m > 0 ? Math.min(1, y / m) : 0) + ')';
+          nav.classList.toggle('is-stuck', y > 8);
+          if (tl) {
+            var line = innerWidth > 900 ? innerHeight * 0.5 : d.querySelector('.tl__fig').getBoundingClientRect().bottom + 90;
+            var best = 0, bd = 1e9;
+            steps.forEach(function (s, i) {
+              var r = s.getBoundingClientRect(), c = line >= r.top && line <= r.bottom ? 0 : Math.min(Math.abs(line - r.top), Math.abs(line - r.bottom));
+              if (c < bd) { bd = c; best = i; }
+            });
+            var tr = tl.getBoundingClientRect();
+            if (tr.top < innerHeight && tr.bottom > 0) setStep(best + 1);
+          }
+          var cur = -1;
+          secs.forEach(function (s, i) { if (s && s.getBoundingClientRect().top <= innerHeight * 0.4) cur = i; });
+          links.forEach(function (a, i) { if (i === cur) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
+        }
+        function req() { if (!tick) { tick = true; requestAnimationFrame(frame); } }
+        addEventListener('scroll', req, { passive: true }); addEventListener('resize', req);
+        steps.forEach(function (s, i) { s.querySelector('button').addEventListener('click', function () { setStep(i + 1); }); });
+        var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { rootMargin: '0px 0px -8% 0px' });
+        d.querySelectorAll('.reveal').forEach(function (e) { io.observe(e); });
+        if (tl) setStep(1);
+        frame();
+      })();
+    </script>
   </body>
 </html>
 <style is:global>
   *, *::before, *::after { box-sizing: border-box; }
-  html { -webkit-text-size-adjust: 100%; }
+  html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--nav) + 16px); }
   body { margin: 0; background: var(--ink); color: var(--paper); font: 400 var(--fs-body)/1.55 var(--f-body); -webkit-font-smoothing: antialiased; }
-  h1, h2, h3, p, figure, dl, dd, ul { margin: 0; padding: 0; }
-  ul { list-style: none; }
+  h1, h2, h3, p, figure, dl, dd, ul, ol, li { margin: 0; padding: 0; }
+  ul, ol { list-style: none; }
   a { color: inherit; }
   p, li { text-wrap: pretty; }
-  a:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
   .wrap { width: 100%; max-width: calc(var(--max) + 2 * var(--gut)); margin-inline: auto; padding-inline: var(--gut); }
-  .skip { position: absolute; left: var(--gut); top: 8px; z-index: 10; padding: 12px 16px; background: var(--amber); border-radius: var(--r-1); text-decoration: none; transform: translateY(-200%); }
+  .skip { position: absolute; left: var(--gut); top: 8px; z-index: 60; padding: 12px 16px; background: var(--amber); border-radius: var(--r-1); text-decoration: none; transform: translateY(-200%); }
   .skip:focus-visible { transform: none; }
-  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
 </style>
