@@ -1,0 +1,64 @@
+# Build the site and deploy it to GitHub Pages.
+#
+# Manual runs only for now (workflow_dispatch). Adding a push trigger on main is a separate, small change.
+# The deploy job refuses to run from any ref except main, so a manual run on another branch is a build check only.
+#
+# Action pins are commit SHAs. upload-pages-artifact is held at v3 deliberately: v3 keeps dotfiles,
+# which dist/.well-known/security.txt needs; v4 drops hidden files.
+name: Build and deploy to GitHub Pages
+
+on:
+  workflow_dispatch:
+
+# Least privilege: the default is read-only. Only the deploy job gets pages: write and id-token: write.
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Set up Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Type-check
+        run: npm run check
+      - name: Build
+        run: npm run build
+      - name: Guard, the artifact must contain the files the site depends on
+        run: |
+          for f in index.html 404.html robots.txt .well-known/security.txt fonts/saira-var-latin.woff2; do
+            test -s "dist/$f" || { echo "missing dist/$f"; exit 1; }
+          done
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
+        with:
+          path: dist
+
+  deploy:
+    # Never deploy from a feature branch, even on a manual run.
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
