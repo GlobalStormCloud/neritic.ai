@@ -16,12 +16,14 @@ export const site = {
   description: `Make sense of your machine noise. Your machines already show when something’s changing. ${PRODUCT} helps you see it.`,
   skip: 'Skip to content',
 
-  // Share image for link previews (metadata only; the page does not show it). File: public/neritic-image.webp.
+  // Share image for link previews (metadata only; the page does not show it). File: public/og-image.png.
+  // The ?v= number is the cache-bust: change it, or publish the new file under a new name, when the image changes.
   share: {
-    image: '/neritic-image.webp',
-    width: 1024,
-    height: 559,
-    alt: 'Neritic logo above a sandy seabed under blue water',
+    image: '/og-image.png?v=1',
+    type: 'image/png',
+    width: 1200,
+    height: 630,
+    alt: 'Neritic AI, by Global Storm. A signal trace leaves its normal band at a marked point.',
   },
 
   header: {
