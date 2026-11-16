@@ -84,8 +84,9 @@ const jsonLd = {
           });
         }
         // A step chosen by click, Enter or focus stays chosen until the list has scrolled by one step height.
-        var pinned = false, pinY = null;
-        function pin(n) { setStep(n); pinned = true; pinY = null; }
+        // Scrolling in the first 800 ms is ignored: it is the browser scrolling the chosen step into view.
+        var pinned = false, pinY = null, pinT = 0;
+        function pin(n) { setStep(n); pinned = true; pinY = null; pinT = performance.now(); }
         function measure() {
           var f = d.querySelector('.tl__fig');
           if (f) h.style.setProperty('--figh', f.offsetHeight + 'px');
@@ -96,7 +97,7 @@ const jsonLd = {
           var y = scrollY, m = h.scrollHeight - innerHeight;
           bar.style.transform = 'scaleX(' + (m > 0 ? Math.min(1, y / m) : 0) + ')';
           nav.classList.toggle('is-stuck', y > 8);
-          if (tl && pinned) {
+          if (tl && pinned && performance.now() - pinT > 800) {
             if (pinY === null) pinY = y;
             else if (Math.abs(y - pinY) > steps[0].offsetHeight) pinned = false;
           }
