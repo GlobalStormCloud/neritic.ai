@@ -45,13 +45,17 @@ const h = site.header;
   }
   @media (max-width: 900px) { .nav__links { display: none; } }
   @media (max-width: 640px) {
+    .nav__in { gap: 12px; }
+    .brand__txt { white-space: nowrap; }
+    .brand__by { letter-spacing: 0; }
     .brand :global(.gsmark) { font-size: 36px; }
     /* the approved label, smaller, no arrow; the arrow-only button is kept for the narrowest phones */
-    .nav__cta :global(.btn) { padding: 0 12px; font-size: 0.8125rem; }
+    .nav__cta :global(.btn) { padding: 0 10px; font-size: 0.8125rem; white-space: nowrap; }
     .nav__cta :global(.arr) { display: none; }
     .nav__cta-icon { display: none; }
   }
-  @media (max-width: 379px) {
+  /* the label needs 171px next to the brand: it fits from 390px wide */
+  @media (max-width: 389px) {
     .nav__cta { display: none; }
     .nav__cta-icon { display: inline-flex; }
   }
