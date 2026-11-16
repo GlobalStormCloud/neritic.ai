@@ -3,20 +3,29 @@ import arrow from '../assets/icons/lucide/arrow-right.svg?raw';
 
 interface Props {
   href: string;
-  size?: 'sm' | 'md';
+  size?: 'sm' | 'md' | 'lg';
   /** full width at 640px and below */
   full?: boolean;
+  /** arrow only; `label` then becomes the accessible name */
+  label?: string;
 }
-const { href, size = 'md', full = false } = Astro.props;
+const { href, size = 'md', full = false, label } = Astro.props;
 // Lucide arrow-right: keep the paths, restyle the <svg> wrapper (size 1.25em, currentColor, stroke 2.25).
 const paths = arrow.match(/<path[^>]*\/>/g)?.join('') ?? '';
 ---
-<a class:list={['btn', 't-btn', size === 'sm' && 'btn--sm t-btn--sm', full && 'btn--full']} href={href}>
-  <slot /><svg class="arr" viewBox="0 0 24 24" aria-hidden="true" focusable="false" set:html={paths} />
+<a class:list={['btn', 't-btn', `btn--${size}`, size === 'sm' && 't-btn--sm', size === 'lg' && 't-btn--lg', full && 'btn--full', label && 'btn--icon']} href={href} aria-label={label}>
+  {!label && <slot />}<svg class="arr" viewBox="0 0 24 24" aria-hidden="true" focusable="false" set:html={paths} />
 </a>
 <style>
-  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; padding: 0 26px; border: 1px solid transparent; border-radius: var(--r-1); background: var(--amber); text-decoration: none; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; padding: 0 26px; border: 0; border-radius: var(--r-1); background: var(--amber); text-decoration: none; cursor: pointer; transition: background-color 0.2s; }
+  .btn:hover { background: var(--amber-hi); }
   .btn--sm { min-height: 40px; padding: 0 16px; }
+  .btn--lg { min-height: 60px; padding: 0 32px; }
+  .btn--icon { width: 44px; min-height: 44px; padding: 0; }
   .arr { flex: none; display: block; width: 1.25em; height: 1.25em; fill: none; stroke: currentColor; stroke-width: 2.25; stroke-linecap: round; stroke-linejoin: round; }
+  @media (prefers-reduced-motion: no-preference) {
+    .arr { transition: transform 0.25s var(--ease); }
+    .btn:hover .arr { transform: translateX(4px); }
+  }
   @media (max-width: 640px) { .btn--full { width: 100%; } }
 </style>

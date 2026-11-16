@@ -2,12 +2,23 @@
 import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
 import Does from '../components/Does.astro';
+import Proof from '../components/Proof.astro';
 import Steps from '../components/Steps.astro';
+import Placeholder from '../components/Placeholder.astro';
 import Contact from '../components/Contact.astro';
+import { site } from '../data/site';
+
+// A draft build (NERITIC_DRAFT=1) also draws two marked placeholder slots for wording that is not approved.
+// The normal build never contains them.
+const draft = process.env.NERITIC_DRAFT === '1';
 ---
 <Base>
   <Hero />
   <Does />
+  <Proof draft={draft} />
   <Steps />
+  {draft && (
+    <section class="sec" id="who"><div class="wrap"><Placeholder note={site.placeholders.who} /></div></section>
+  )}
   <Contact />
 </Base>

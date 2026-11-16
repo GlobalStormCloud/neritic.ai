@@ -28,6 +28,12 @@ export const site = {
     by: `by ${COMPANY}`,
     byUrl: 'https://globalstorm.cloud/',
     demo: 'Book a 30-minute demo',
+    navLabel: 'Sections',
+    links: [
+      { label: 'What it does', id: 'what' },
+      { label: 'How it starts', id: 'start' },
+      { label: 'Contact', id: 'contact' },
+    ],
   },
 
   hero: {
@@ -40,6 +46,8 @@ export const site = {
     tag: 'Illustration',
     caption: 'what changed, which machine, since when',
     alt: 'Illustration: four machine signals run steady, then one changes at a marked point.',
+    stepAlt:
+      'Illustration: four machine signals. A stretch of normal running is marked, then one signal changes at a marked point.',
   },
 
   does: {
@@ -52,8 +60,22 @@ export const site = {
     ],
   },
 
+  // Proof: only that the product is working on the vessel and which inputs it uses. No result, number or method.
+  proof: {
+    heading: `${PRODUCT} is working on STS Kapitan Głowacki.`,
+    line: 'It monitors the vessel using CAN data, vibration and NMEA.',
+    inputs: [
+      { label: 'CAN data', icon: 'cable' },
+      { label: 'Vibration', icon: 'audio-waveform' },
+      { label: 'NMEA', icon: 'compass' },
+    ],
+    photo: { src: '/img/sts-kapitan-glowacki.jpg', width: 900, height: 1050, alt: 'STS Kapitan Głowacki under sail' },
+    caption: 'STS Kapitan Głowacki',
+  },
+
   starts: {
     label: 'How it starts',
+    tags: { what: 'what changed', which: 'which machine', since: 'since when' },
     items: [
       { label: 'Connect a machine', text: 'Point it at your machine’s data.' },
       { label: 'Show it normal', text: 'Tell it when the machine was running well.' },
@@ -66,8 +88,10 @@ export const site = {
 
   contact: {
     label: 'Contact',
-    email: 'contact@globalstorm.cloud',
+    heading: 'Curious how it would work on your machines? Ask us.',
     demo: 'Book a 30-minute demo',
+    hello: 'Say hello:',
+    email: 'contact@globalstorm.cloud',
   },
 
   footer: {
@@ -78,6 +102,14 @@ export const site = {
     registryUrl: 'https://globalstorm.cloud/company/#registry',
     privacyLabel: 'Privacy',
     privacyUrl: 'https://globalstorm.cloud/legal/',
+  },
+
+  // Placeholders: two slots whose wording is not approved. They are drawn ONLY by a draft build
+  // (NERITIC_DRAFT=1), as a visibly marked empty slot with no claim text, and never reach the normal build output.
+  placeholders: {
+    tag: 'Placeholder',
+    proof: 'Proof line, wording to come',
+    who: 'Who it is for, wording to come',
   },
 
   // shortcut: the build spec has no 404 wording; these are minimal stand-ins.

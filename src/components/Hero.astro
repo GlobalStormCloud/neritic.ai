@@ -1,26 +1,59 @@
 ---
 import Button from './Button.astro';
-import Illustration from './Illustration.astro';
+import Plate from './Plate.astro';
+import { heroCalm, heroFlag } from '../data/signals';
 import { DEMO_URL, site } from '../data/site';
 const h = site.hero;
+const lanes = [52, 140, 228, 316];
+const MARK = 640; // x of the marked point; the lamp sits on lane 3
 ---
-<section class="hero">
-  <div class="wrap hero__in">
-    <div>
-      <h1 class="t-h1">{h.h1}</h1>
+<section class="hero" id="top">
+  <div class="wrap">
+    <h1 class="t-h1">{h.h1}</h1>
+    <div class="hero__row">
       <p class="lead t-lead">{h.lead}</p>
-      <div class="hero__act"><Button href={DEMO_URL} full>{h.demo}</Button></div>
+      <div><Button href={DEMO_URL} size="lg" full>{h.demo}</Button></div>
     </div>
-    <div class="panel"><Illustration /></div>
+    <div class="hero__plate">
+      <Plate>
+        <svg class="ill" viewBox="0 0 1000 360" role="img" aria-label={site.illustration.alt} preserveAspectRatio="xMidYMid meet">
+          <defs><clipPath id="sw"><rect class="sweep" x="0" y="0" width="1000" height="360" /></clipPath></defs>
+          {lanes.map((y) => <line class="lane" x1="20" x2="980" y1={y} y2={y} />)}
+          <g clip-path="url(#sw)">
+            {heroCalm.map((d) => <path class="trace" d={d} />)}
+            <path class="trace trace--flag" d={heroFlag} />
+          </g>
+          <line class="scan" x1="0" x2="0" y1="10" y2="350" />
+          <g class="alert">
+            <line class="mark" x1={MARK} x2={MARK} y1="14" y2="346" />
+            <circle class="ring" cx={MARK} cy="228" r="9" />
+            <ellipse class="halo" cx={MARK} cy="228" rx="13" ry="9.6" />
+            <ellipse class="lamp" cx={MARK} cy="228" rx="7.5" ry="5.5" />
+          </g>
+        </svg>
+      </Plate>
+    </div>
   </div>
 </section>
 <style>
-  .hero { padding-block: clamp(48px, 7vw, 96px) clamp(56px, 7vw, 104px); }
-  .hero__in { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 40px clamp(32px, 5vw, 72px); align-items: center; }
-  h1 { max-width: 11em; }
-  .lead { margin-top: 22px; max-width: 26em; }
-  .hero__act { margin-top: 34px; }
-  .panel { background: var(--graphite); border: 1px solid var(--rule); border-radius: var(--r-2); padding: 24px 28px; }
-  @media (max-width: 900px) { .hero__in { grid-template-columns: minmax(0, 1fr); } }
-  @media (max-width: 640px) { .panel { padding: 20px 14px; } }
+  .hero { position: relative; isolation: isolate; padding-block: clamp(40px, 6vw, 88px) clamp(56px, 7vw, 104px); }
+  .hero::before { content: ''; position: absolute; inset: 0 0 -40px; z-index: -1; background: radial-gradient(60% 55% at 78% 8%, rgba(74, 85, 97, 0.32), transparent 72%), radial-gradient(rgba(244, 244, 241, 0.075) 1px, transparent 1.5px) 0 0 / 30px 30px; -webkit-mask-image: linear-gradient(#000 55%, transparent); mask-image: linear-gradient(#000 55%, transparent); }
+  h1 { max-width: 15.5em; }
+  .hero__row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px 48px; align-items: end; margin-top: clamp(24px, 3vw, 40px); }
+  .lead { max-width: 27em; }
+  .hero__plate { margin-top: clamp(36px, 4.5vw, 64px); }
+  .scan { stroke: var(--mist-lt); stroke-width: 1; opacity: 0; }
+  .ring { fill: none; stroke: var(--amber); stroke-width: 1.5; opacity: 0; }
+  @media (max-width: 900px) { .hero__row { grid-template-columns: minmax(0, 1fr); } }
+  /* the sweep, the marker and a ring that pulses three times and stops (under 5 s in all, so no pause control is needed) */
+  @media (prefers-reduced-motion: no-preference) {
+    .sweep { transform-origin: 0 0; animation: sweep 2.6s 0.35s linear both; }
+    .scan { animation: scan 2.6s 0.35s linear both; }
+    .alert { animation: fade 0.5s 2s both; }
+    .ring { animation: ring 2.4s 2.1s ease-out 3 both; }
+    @keyframes sweep { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+    @keyframes scan { 0% { transform: translateX(0); opacity: 0.7; } 92% { opacity: 0.7; } 100% { transform: translateX(1000px); opacity: 0; } }
+    @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes ring { 0% { r: 9; opacity: 0.6; } 100% { r: 34; opacity: 0; } }
+  }
 </style>
