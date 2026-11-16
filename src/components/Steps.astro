@@ -36,7 +36,7 @@ const MARK = 640; // x of the marked point; the lamp sits on lane 3
       <ol class="steps">
         {s.items.map((it, i) => (
           <li class:list={['step', i === 0 && 'is-on']}>
-            <button type="button" class="step__btn" aria-pressed={i === 0 ? 'true' : 'false'}>
+            <button type="button" class="step__btn" aria-current={i === 0 ? 'step' : undefined}>
               <span class="t-mono" aria-hidden="true">{i + 1}</span>
               <span class="lbl t-legend">{it.label}</span>
               <span class="txt t-step">{it.text}</span>
@@ -88,7 +88,7 @@ const MARK = 640; // x of the marked point; the lamp sits on lane 3
   @media (max-width: 900px) {
     .tl { grid-template-columns: minmax(0, 1fr); }
     .tl__fig { top: calc(var(--nav) + 8px); z-index: 5; padding-bottom: 10px; background: var(--ink); }
-    .step__btn { min-height: 0; padding-block: 22px; }
+    .step__btn { min-height: 0; padding-block: 22px; scroll-margin-top: calc(var(--figh, 280px) + 8px); } /* --figh: the plate height, set by the page script; keeps a focused step clear of the sticky plate */
   }
   @media (max-width: 640px) { .chip { display: none; } }
 </style>
