@@ -2,7 +2,7 @@
 import '../styles/theme.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { site } from '../data/site';
+import { PRODUCT, COMPANY_LEGAL, site } from '../data/site';
 
 interface Props {
   title?: string;
@@ -13,6 +13,14 @@ interface Props {
 const { title = site.title, description = site.description, path = '/', noindex = false } = Astro.props;
 const canonical = new URL(path, site.url).href;
 const image = new URL(site.share.image, site.url).href;
+// Structured data: a website and its publisher, names and addresses only.
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    { '@type': 'WebSite', name: PRODUCT, url: site.url },
+    { '@type': 'Organization', name: COMPANY_LEGAL, url: site.footer.byUrl },
+  ],
+};
 ---
 <!doctype html>
 <html lang={site.lang}>
@@ -23,9 +31,12 @@ const image = new URL(site.share.image, site.url).href;
     <meta name="description" content={description} />
     <meta name="color-scheme" content="dark" />
     <meta name="theme-color" content="#0d0f12" />
-    {noindex && <meta name="robots" content="noindex" />}
+    <meta name="robots" content={noindex ? 'noindex' : 'max-image-preview:large'} />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
     <link rel="canonical" href={canonical} />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={PRODUCT} />
+    <meta property="og:locale" content={site.locale} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
@@ -35,8 +46,11 @@ const image = new URL(site.share.image, site.url).href;
     <meta property="og:image:height" content={String(site.share.height)} />
     <meta property="og:image:alt" content={site.share.alt} />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={image} />
     <meta name="twitter:image:alt" content={site.share.alt} />
+    {!noindex && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
