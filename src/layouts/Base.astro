@@ -30,14 +30,17 @@ const image = new URL(site.share.image, site.url).href;
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={image} />
+    <meta property="og:image:type" content={site.share.type} />
     <meta property="og:image:width" content={String(site.share.width)} />
     <meta property="og:image:height" content={String(site.share.height)} />
     <meta property="og:image:alt" content={site.share.alt} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={image} />
     <meta name="twitter:image:alt" content={site.share.alt} />
-    <!-- empty icon: no request until a favicon file exists -->
-    <link rel="icon" href="data:," />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <link rel="preload" href="/fonts/saira-var-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/inter-var-latin.woff2" as="font" type="font/woff2" crossorigin />
   </head>
