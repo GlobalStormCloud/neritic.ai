@@ -5,11 +5,15 @@ export const PRODUCT = 'Neritic AI';
 
 export const COMPANY = 'Global Storm';
 
+/** The company's registered name, used in the structured data only. */
+export const COMPANY_LEGAL = 'Global Storm sp. z o.o.';
+
 /** One value for every demo button on the page. */
 export const DEMO_URL = 'https://globalstorm.cloud/company/#contact';
 
 export const site = {
   lang: 'en',
+  locale: 'en_GB',
   url: 'https://neritic.ai/',
   // shortcut: stand-ins built from the hero text below; replace if a dedicated title and description are supplied.
   title: `${PRODUCT} · Make sense of your machine noise.`,
