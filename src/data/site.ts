@@ -32,7 +32,6 @@ export const site = {
 
   header: {
     by: `by ${COMPANY}`,
-    byUrl: 'https://globalstorm.cloud/',
     demo: 'Book a 30-minute demo',
     navLabel: 'Sections',
     links: [
