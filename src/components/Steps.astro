@@ -33,7 +33,7 @@ const MARK = 640; // x of the marked point; the lamp sits on lane 3
           </div>
         </Plate>
       </div>
-      <ol class="steps">
+      <ol class="steps" role="list">
         {s.items.map((it, i) => (
           <li class:list={['step', i === 0 && 'is-on']}>
             <button type="button" class="step__btn" aria-current={i === 0 ? 'step' : undefined}>
