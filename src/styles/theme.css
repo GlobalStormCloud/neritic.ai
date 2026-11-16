@@ -25,23 +25,23 @@
   --f-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   --f-mono: "IBM Plex Mono", ui-monospace, monospace;
 
-  /* sizes */
-  --fs-body: 17px;
-  --fs-h1: clamp(40px, 2.2rem + 3.6vw, 92px);
-  --fs-h2: clamp(32px, 1.6rem + 2.2vw, 60px);
-  --fs-h2-xl: clamp(34px, 1.6rem + 3vw, 76px);
-  --fs-lead: clamp(18px, 1rem + 0.35vw, 22px);
-  --fs-statement: clamp(20px, 1.05rem + 0.5vw, 26px);
-  --fs-step: clamp(22px, 1.05rem + 0.6vw, 30px);
-  --fs-email: clamp(20px, 1rem + 1vw, 28px);
-  --fs-wordmark: 24px;
-  --fs-foot-name: 18px;
-  --fs-btn: 16px;
-  --fs-btn-sm: 14px;
-  --fs-btn-lg: 17px;
-  --fs-mono: 14px;
-  --fs-by: 13px;
-  --fs-small: 12px;
+  /* sizes: rem, so the visitor's browser font-size setting is honoured (16px = 1rem) */
+  --fs-body: 1.0625rem;
+  --fs-h1: clamp(2.5rem, 2.2rem + 3.6vw, 5.75rem);
+  --fs-h2: clamp(2rem, 1.6rem + 2.2vw, 3.75rem);
+  --fs-h2-xl: clamp(2.125rem, 1.6rem + 3vw, 4.75rem);
+  --fs-lead: clamp(1.125rem, 1rem + 0.35vw, 1.375rem);
+  --fs-statement: clamp(1.25rem, 1.05rem + 0.5vw, 1.625rem);
+  --fs-step: clamp(1.375rem, 1.05rem + 0.6vw, 1.875rem);
+  --fs-email: clamp(1.25rem, 1rem + 1vw, 1.75rem);
+  --fs-wordmark: 1.5rem;
+  --fs-foot-name: 1.125rem;
+  --fs-btn: 1rem;
+  --fs-btn-sm: 0.875rem;
+  --fs-btn-lg: 1.0625rem;
+  --fs-mono: 0.875rem;
+  --fs-by: 0.8125rem;
+  --fs-small: 0.8125rem;
 
   /* shape and motion */
   --r-1: 2px;
@@ -58,7 +58,7 @@
 
 /* ---- type roles ---- */
 .t-wordmark { font: 660 var(--fs-wordmark)/1.1 var(--f-display); font-stretch: 118%; letter-spacing: -0.006em; color: var(--paper); }
-@media (max-width: 640px) { .t-wordmark { font-size: 22px; } }
+@media (max-width: 640px) { .t-wordmark { font-size: 1.375rem; } }
 .t-by { font: 400 var(--fs-by)/1.4 var(--f-mono); letter-spacing: 0.02em; color: var(--mist-lt); }
 .t-h1 { font: 640 var(--fs-h1)/1 var(--f-display); font-stretch: 112%; letter-spacing: -0.018em; text-wrap: balance; color: var(--paper); }
 .t-h2 { font: 630 var(--fs-h2)/1.04 var(--f-display); font-stretch: 114%; letter-spacing: -0.014em; text-wrap: balance; color: var(--paper); }
