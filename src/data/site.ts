@@ -17,7 +17,7 @@ export const site = {
   url: 'https://neritic.ai/',
   // shortcut: stand-ins built from the hero text below; replace if a dedicated title and description are supplied.
   title: `${PRODUCT} · Make sense of your machine noise.`,
-  description: `Make sense of your machine noise. Your machines already show when something’s changing. ${PRODUCT} helps you see it.`,
+  description: `Make sense of your machine noise. ${PRODUCT} learns what normal looks like for each of your machines, so you hear early when one starts to drift.`,
   skip: 'Skip to content',
 
   // Share image for link previews (metadata only; the page does not show it). File: public/og-image.png.
@@ -27,7 +27,7 @@ export const site = {
     type: 'image/png',
     width: 1200,
     height: 630,
-    alt: 'Neritic AI, by Global Storm. A signal trace leaves its normal band at a marked point.',
+    alt: 'Neritic AI, by Global Storm. Make sense of your machine noise.',
   },
 
   header: {
