@@ -16,6 +16,14 @@ export const site = {
   description: `Make sense of your machine noise. Your machines already show when something’s changing. ${PRODUCT} helps you see it.`,
   skip: 'Skip to content',
 
+  // Share image for link previews (metadata only; the page does not show it). File: public/neritic-image.webp.
+  share: {
+    image: '/neritic-image.webp',
+    width: 1024,
+    height: 559,
+    alt: 'Neritic logo above a sandy seabed under blue water',
+  },
+
   header: {
     by: `by ${COMPANY}`,
     byUrl: 'https://globalstorm.cloud/',
