@@ -52,9 +52,10 @@
   --max: 1312px;
   --gut: clamp(20px, 4.5vw, 64px);
   --nav: 68px;
+  --brand-hit: 32px; /* height of each stacked brand link in the header */
   --sec-pad: clamp(72px, 9vw, 136px);
 }
-@media (max-width: 640px) { :root { --nav: 60px; } }
+@media (max-width: 640px) { :root { --nav: 60px; --brand-hit: 28px; } }
 
 /* ---- type roles ---- */
 .t-wordmark { font: 660 var(--fs-wordmark)/1.1 var(--f-display); font-stretch: 118%; letter-spacing: -0.006em; color: var(--paper); }

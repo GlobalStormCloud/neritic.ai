@@ -8,7 +8,7 @@ const MARK = 640; // x of the marked point; the lamp sits on lane 3
 ---
 <section class="sec" id="start">
   <div class="wrap">
-    <div class="sec__head reveal"><span class="t-mono">03</span><h2 class="t-h2">{s.label}</h2></div>
+    <div class="sec__head reveal"><span class="t-mono" aria-hidden="true">03</span><h2 class="t-h2">{s.label}</h2></div>
     <!-- data-step is set by the page script; without it the first step shows and all text is readable -->
     <div class="tl" data-step="1">
       <div class="tl__fig">
@@ -37,7 +37,7 @@ const MARK = 640; // x of the marked point; the lamp sits on lane 3
         {s.items.map((it, i) => (
           <li class:list={['step', i === 0 && 'is-on']}>
             <button type="button" class="step__btn" aria-pressed={i === 0 ? 'true' : 'false'}>
-              <span class="t-mono">{i + 1}</span>
+              <span class="t-mono" aria-hidden="true">{i + 1}</span>
               <span class="lbl t-legend">{it.label}</span>
               <span class="txt t-step">{it.text}</span>
             </button>

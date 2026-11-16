@@ -118,9 +118,9 @@ export const site = {
     who: 'Who it is for, wording to come',
   },
 
-  // shortcut: the build spec has no 404 wording; these are minimal stand-ins.
   notFound: {
     title: 'Page not found',
-    home: PRODUCT,
+    body: 'That page does not exist.',
+    home: 'Go to the home page',
   },
 } as const;
