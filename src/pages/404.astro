@@ -1,0 +1,15 @@
+---
+import Base from '../layouts/Base.astro';
+import { PRODUCT, site } from '../data/site';
+const n = site.notFound;
+---
+<Base title={`${n.title} · ${PRODUCT}`} path="/404/" noindex>
+  <section class="nf wrap">
+    <p class="t-mono">404</p>
+    <h1 class="t-h1">{n.title}</h1>
+    <p><a class="t-statement" href="/">{n.home}</a></p>
+  </section>
+</Base>
+<style>
+  .nf { padding-block: 96px 128px; display: grid; gap: 22px; justify-items: start; }
+</style>

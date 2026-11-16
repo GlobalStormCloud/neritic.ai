@@ -1,0 +1,23 @@
+---
+import Button from './Button.astro';
+import { PRODUCT, DEMO_URL, site } from '../data/site';
+const h = site.header;
+---
+<header class="top">
+  <div class="wrap top__in">
+    <div class="brand">
+      <a class="brand__name t-wordmark" href="/">{PRODUCT}</a>
+      <a class="brand__by t-by" href={h.byUrl}>{h.by}</a>
+    </div>
+    <div class="top__cta"><Button href={DEMO_URL} size="sm">{h.demo}</Button></div>
+  </div>
+</header>
+<style>
+  .top { border-bottom: 1px solid var(--rule); }
+  .top__in { display: flex; align-items: center; justify-content: space-between; min-height: 76px; }
+  .brand { display: flex; flex-direction: column; gap: 2px; }
+  .brand__name { text-decoration: none; }
+  /* min-height 24px: touch-target size for a link next to another link */
+  .brand__by { align-self: flex-start; display: inline-flex; align-items: center; min-height: 24px; text-underline-offset: 3px; }
+  @media (max-width: 640px) { .top__cta { display: none; } }
+</style>

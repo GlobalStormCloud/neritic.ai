@@ -1,0 +1,22 @@
+---
+import arrow from '../assets/icons/lucide/arrow-right.svg?raw';
+
+interface Props {
+  href: string;
+  size?: 'sm' | 'md';
+  /** full width at 640px and below */
+  full?: boolean;
+}
+const { href, size = 'md', full = false } = Astro.props;
+// Lucide arrow-right: keep the paths, restyle the <svg> wrapper (size 1.25em, currentColor, stroke 2.25).
+const paths = arrow.match(/<path[^>]*\/>/g)?.join('') ?? '';
+---
+<a class:list={['btn', 't-btn', size === 'sm' && 'btn--sm t-btn--sm', full && 'btn--full']} href={href}>
+  <slot /><svg class="arr" viewBox="0 0 24 24" aria-hidden="true" focusable="false" set:html={paths} />
+</a>
+<style>
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; padding: 0 26px; border: 1px solid transparent; border-radius: var(--r-1); background: var(--amber); text-decoration: none; }
+  .btn--sm { min-height: 40px; padding: 0 16px; }
+  .arr { flex: none; display: block; width: 1.25em; height: 1.25em; fill: none; stroke: currentColor; stroke-width: 2.25; stroke-linecap: round; stroke-linejoin: round; }
+  @media (max-width: 640px) { .btn--full { width: 100%; } }
+</style>

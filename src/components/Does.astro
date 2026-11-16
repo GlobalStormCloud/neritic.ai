@@ -1,0 +1,23 @@
+---
+import SectionLabel from './SectionLabel.astro';
+import { site } from '../data/site';
+const d = site.does;
+---
+<section class="sec">
+  <div class="wrap sec__in">
+    <SectionLabel>{d.label}</SectionLabel>
+    <ul class="does" role="list">
+      {d.items.map((text, i) => (
+        <li><span class="t-mono">{String(i + 1).padStart(2, '0')}</span><p class="t-statement">{text}</p></li>
+      ))}
+    </ul>
+  </div>
+</section>
+<style>
+  .sec { padding-block: var(--sec-pad); border-top: 1px solid var(--rule); }
+  .sec__in { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 28px clamp(32px, 5vw, 72px); align-items: start; }
+  .does { border-top: 1px solid var(--rule); }
+  .does li { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 8px 12px; padding: 22px 0; border-bottom: 1px solid var(--rule); }
+  .does span { padding-top: 4px; }
+  @media (max-width: 900px) { .sec__in { grid-template-columns: minmax(0, 1fr); } }
+</style>
