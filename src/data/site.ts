@@ -68,6 +68,8 @@ export const site = {
     company: 'Global Storm sp. z o.o., Warsaw, Poland',
     registryLabel: 'globalstorm.cloud/company/#registry',
     registryUrl: 'https://globalstorm.cloud/company/#registry',
+    privacyLabel: 'Privacy',
+    privacyUrl: 'https://globalstorm.cloud/legal/',
   },
 
   // shortcut: the build spec has no 404 wording; these are minimal stand-ins.

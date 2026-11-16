@@ -5,10 +5,11 @@ const f = site.footer;
 <footer class="foot">
   <div class="wrap foot__in">
     <p><span class="t-foot-name">{PRODUCT}</span> <span class="t-mono">· <a href={f.byUrl}>{f.by}</a></span></p>
-    <p class="t-mono">{f.company} · <a href={f.registryUrl}>{f.registryLabel}</a></p>
+    <p class="t-mono">{f.company} · <a href={f.registryUrl}>{f.registryLabel}</a> · <a href={f.privacyUrl}>{f.privacyLabel}</a></p>
   </div>
 </footer>
 <style>
   .foot { border-top: 1px solid var(--rule); padding-block: 32px 44px; }
+  .foot a { overflow-wrap: anywhere; } /* 320 px: the registry link is wider than the text column */
   .foot__in { display: flex; flex-wrap: wrap; gap: 12px 40px; justify-content: space-between; }
 </style>
