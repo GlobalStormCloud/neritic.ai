@@ -27,7 +27,7 @@ export const site = {
     type: 'image/png',
     width: 1200,
     height: 630,
-    alt: 'Neritic AI, by Global Storm. Make sense of your machine noise.',
+    alt: 'Neritic AI, by Global Storm. Three machine signals run steady, then one changes at a marked point.',
   },
 
   header: {
