@@ -5,15 +5,17 @@ const f = site.footer;
 ---
 <footer class="foot">
   <div class="wrap foot__in">
-    <p><span class="foot__name t-foot-name"><Glyph />{PRODUCT}</span> <span class="t-mono">· <a href={f.byUrl}>{f.by}</a></span></p>
+    <p class="foot__brand"><span class="foot__name t-foot-name"><Glyph />{PRODUCT}</span> <span class="t-mono">· <a href={f.byUrl}>{f.by}</a></span></p>
     <p class="t-mono co"><span>{f.company}</span><a href={f.registryUrl}>{f.registryLabel}</a><a href={f.privacyUrl}>{f.privacyLabel}</a></p>
   </div>
 </footer>
 <style>
   .foot { padding-block: 34px 48px; color: var(--mist-lt); border-top: 1px solid var(--rule); }
-  .foot a { display: inline-block; min-height: 24px; overflow-wrap: anywhere; } /* 320 px: the registry link is wider than the text column */
+  /* 44px tap targets; 320 px: the registry link is wider than the text column */
+  .foot a { display: inline-flex; align-items: center; min-height: 44px; overflow-wrap: anywhere; }
+  .foot__brand { display: flex; flex-wrap: wrap; align-items: center; gap: 0 10px; }
   .foot__name { display: inline-flex; align-items: center; gap: 10px; vertical-align: middle; }
   .foot__name :global(.gsmark) { font-size: 30px; }
   .foot__in { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 14px 40px; }
-  .co { display: flex; flex-wrap: wrap; gap: 6px 18px; max-width: 46em; }
+  .co { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; max-width: 46em; }
 </style>
