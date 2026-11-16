@@ -1,0 +1,22 @@
+---
+import Button from './Button.astro';
+import SectionLabel from './SectionLabel.astro';
+import { DEMO_URL, site } from '../data/site';
+const c = site.contact;
+---
+<section class="sec" id="contact">
+  <div class="wrap sec__in">
+    <SectionLabel>{c.label}</SectionLabel>
+    <div>
+      <a class="mail t-email" href={`mailto:${c.email}`}>{c.email}</a>
+      <div class="act"><Button href={DEMO_URL}>{c.demo}</Button></div>
+    </div>
+  </div>
+</section>
+<style>
+  .sec { padding-block: var(--sec-pad); border-top: 1px solid var(--rule); }
+  .sec__in { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 28px clamp(32px, 5vw, 72px); align-items: start; }
+  .mail { text-decoration: none; border-bottom: 1px solid var(--amber); overflow-wrap: anywhere; }
+  .act { margin-top: 26px; }
+  @media (max-width: 900px) { .sec__in { grid-template-columns: minmax(0, 1fr); } }
+</style>

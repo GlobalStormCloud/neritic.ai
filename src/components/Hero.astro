@@ -1,0 +1,26 @@
+---
+import Button from './Button.astro';
+import Illustration from './Illustration.astro';
+import { DEMO_URL, site } from '../data/site';
+const h = site.hero;
+---
+<section class="hero">
+  <div class="wrap hero__in">
+    <div>
+      <h1 class="t-h1">{h.h1}</h1>
+      <p class="lead t-lead">{h.lead}</p>
+      <div class="hero__act"><Button href={DEMO_URL} full>{h.demo}</Button></div>
+    </div>
+    <div class="panel"><Illustration /></div>
+  </div>
+</section>
+<style>
+  .hero { padding-block: clamp(48px, 7vw, 96px) clamp(56px, 7vw, 104px); }
+  .hero__in { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 40px clamp(32px, 5vw, 72px); align-items: center; }
+  h1 { max-width: 11em; }
+  .lead { margin-top: 22px; max-width: 26em; }
+  .hero__act { margin-top: 34px; }
+  .panel { background: var(--graphite); border: 1px solid var(--rule); border-radius: var(--r-2); padding: 24px 28px; }
+  @media (max-width: 900px) { .hero__in { grid-template-columns: minmax(0, 1fr); } }
+  @media (max-width: 640px) { .panel { padding: 20px 14px; } }
+</style>

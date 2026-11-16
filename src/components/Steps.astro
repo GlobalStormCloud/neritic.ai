@@ -1,0 +1,28 @@
+---
+import SectionLabel from './SectionLabel.astro';
+import { site } from '../data/site';
+const s = site.starts;
+---
+<section class="sec">
+  <div class="wrap">
+    <SectionLabel>{s.label}</SectionLabel>
+    <ul class="starts" role="list">
+      {s.items.map((it, i) => (
+        <li><span class="t-mono">{i + 1}</span><h3 class="t-step-label">{it.label}</h3><p class="t-step">{it.text}</p></li>
+      ))}
+    </ul>
+  </div>
+</section>
+<style>
+  .sec { padding-block: var(--sec-pad); border-top: 1px solid var(--rule); }
+  .starts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--rule); margin-top: 36px; }
+  .starts li { padding: 26px 28px 8px 0; margin-right: 28px; border-right: 1px solid var(--rule); }
+  .starts li:last-child { border-right: 0; margin-right: 0; }
+  h3 { margin: 18px 0 0; }
+  p { margin-top: 8px; }
+  @media (max-width: 900px) {
+    .starts { grid-template-columns: minmax(0, 1fr); }
+    .starts li { border-right: 0; margin-right: 0; border-bottom: 1px solid var(--rule); padding: 22px 0; }
+    .starts li:last-child { border-bottom: 0; }
+  }
+</style>
