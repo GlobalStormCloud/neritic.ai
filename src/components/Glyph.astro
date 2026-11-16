@@ -1,0 +1,11 @@
+---
+import mark from '../assets/gs-mark.svg?raw';
+
+// The Global Storm glyph, one path, drawn from the supplied file and never edited. Decorative: the visible
+// text "Neritic AI" sits next to it. Size comes from the parent's font-size; colour from `color`.
+const d = mark.match(/ d="([^"]+)"/)?.[1] ?? '';
+---
+<svg class="gsmark" viewBox="0 0 799.15 800" aria-hidden="true" focusable="false"><path fill="currentColor" d={d} /></svg>
+<style>
+  .gsmark { flex: none; display: block; height: 1em; width: auto; aspect-ratio: 799.15 / 800; color: var(--paper); }
+</style>
