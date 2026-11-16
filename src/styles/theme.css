@@ -99,3 +99,31 @@
   .js .reveal.in { opacity: 1; transform: none; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+
+/* ---- print: everything visible, dark text on white, no motion ----
+   The page is drawn for a dark screen and reveals content on scroll. A printout has no scroll, so every
+   reveal is forced open, the drawings are shown whole ("How it starts" in its last state), and the
+   colour tokens are swapped for a light set. */
+@media print {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  :root {
+    --ink: #fff; --graphite: #fff; --graphite-2: #eee; --paper: #111; --mist-lt: #444;
+    --rule: rgba(0, 0, 0, 0.25); --rule-2: rgba(0, 0, 0, 0.4);
+    --amber: #b36b00; --amber-hi: #b36b00; --amber-halo: rgba(179, 107, 0, 0.18);
+  }
+  .js .reveal { opacity: 1 !important; transform: none !important; }
+  .progress, .skip, .scan, .ring, .nav__links, .nav__cta-icon, .cta .bg, .hero::before { display: none !important; }
+  .nav { position: static !important; background: none !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+  .tl__fig { position: static !important; }
+  .step__btn { min-height: 0 !important; }
+  /* buttons have no background in print: draw them as an outline */
+  .btn { background: none !important; color: var(--paper) !important; box-shadow: inset 0 0 0 1.5px var(--paper); }
+  /* "How it starts": print the last step's state, all three tags shown */
+  .tl .trace { opacity: 0.8 !important; }
+  .tl .win { opacity: 0.45 !important; }
+  .tl .win-edge { opacity: 0.6 !important; }
+  .tl .tail--calm { opacity: 0 !important; }
+  .tl .tail--drift, .tl .alert, .tl .chip { opacity: 1 !important; }
+  .card, .plate, .fig, .step { break-inside: avoid; }
+  .sec__head { break-after: avoid; }
+}
