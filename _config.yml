@@ -1,0 +1,13 @@
+# Only the three static files that are already in this repository root are published by the
+# branch-based Pages build. Everything else here is source for the build workflow, and Astro
+# files begin with "---", which Jekyll would try to read as front matter. Excluding them keeps
+# the branch build from touching them. Not used once Pages deploys from the workflow.
+exclude:
+  - .github
+  - src
+  - public
+  - README.md
+  - astro.config.mjs
+  - package.json
+  - package-lock.json
+  - tsconfig.json
