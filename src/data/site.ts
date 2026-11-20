@@ -40,7 +40,7 @@ export const site = {
       { label: 'Contact', id: 'contact' },
     ],
     // Last item in the menu: leaves this page for the company site.
-    company: { label: COMPANY, url: 'https://globalstorm.cloud/' },
+    company: { label: COMPANY, url: 'https://globalstorm.cloud/', host: 'globalstorm.cloud' },
   },
 
   hero: {
