@@ -16,6 +16,7 @@ const h = site.header;
     </a>
     <nav aria-label={h.navLabel} class="nav__links">
       {h.links.map((l) => <a href={`/#${l.id}`}>{l.label}</a>)}
+      <a href={h.company.url}>{h.company.label}</a>
     </nav>
     <span class="nav__cta"><Button href={DEMO_URL} size="sm">{h.demo}</Button></span>
     <span class="nav__cta-icon"><Button href={DEMO_URL} size="sm" label={h.demo} /></span>
@@ -40,7 +41,9 @@ const h = site.header;
     .nav { transition: border-color 0.25s; }
     .nav__links a { transition: color 0.2s, border-color 0.2s; }
   }
-  @media (max-width: 900px) { .nav__links { display: none; } }
+  .nav__links a { white-space: nowrap; }
+  /* four links plus brand and the demo button need about 1030px; below that the menu is hidden, as before on phones */
+  @media (max-width: 1040px) { .nav__links { display: none; } }
   @media (max-width: 640px) {
     .nav__in { gap: 12px; }
     .brand__txt { white-space: nowrap; }

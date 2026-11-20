@@ -73,7 +73,7 @@ const jsonLd = {
         h.classList.add('js');
         var nav = d.querySelector('.nav'), bar = d.querySelector('.progress');
         var tl = d.querySelector('.tl'), steps = [].slice.call(d.querySelectorAll('.step'));
-        var links = [].slice.call(d.querySelectorAll('.nav__links a'));
+        var links = [].slice.call(d.querySelectorAll('.nav__links a[href^="/#"]'));
         var secs = links.map(function (a) { return d.querySelector(a.hash); });
         function setStep(n) {
           tl.setAttribute('data-step', n);

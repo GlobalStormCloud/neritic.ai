@@ -39,6 +39,8 @@ export const site = {
       { label: 'How it starts', id: 'start' },
       { label: 'Contact', id: 'contact' },
     ],
+    // Last item in the menu: leaves this page for the company site.
+    company: { label: COMPANY, url: 'https://globalstorm.cloud/' },
   },
 
   hero: {
